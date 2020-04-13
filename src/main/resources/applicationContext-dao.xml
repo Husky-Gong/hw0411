@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">    <!-- 数据库连接池 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${m_driver}"/>
+        <property name="url" value="${m_url}"/>
+        <property name="username" value="${m_uname}"/>
+        <property name="password" value="${m_pwd}"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 加载mybatis核心配置文件 -->
+        <property name="typeAliasesPackage" value="com.zx.domain"/>
+        <!-- 配置mybatis全局 -->
+        <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml"/>
+    </bean>
+
+    <!-- 扫描mapper文件 -->
+    <bean id="mapper" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="factory"/>
+        <property name="basePackage" value="com.zx.mapper"/>
+    </bean>
+</beans>

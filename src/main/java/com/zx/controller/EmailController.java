@@ -5,6 +5,7 @@ import com.zx.service.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -14,9 +15,13 @@ public class EmailController {
     @Autowired
     IEmailService iEmailService;
 
-    @RequestMapping("/list.do")
-    public List<Email> list(){
-        return iEmailService.findAll();
+    @RequestMapping("/listEmails")
+    public ModelAndView listEmails(){
+        ModelAndView mav = new ModelAndView();
+        List<Email> emals = iEmailService.findAll();
+        mav.addObject("emails",emals);
+        mav.setViewName("email");
+        return mav;
     }
 
 
