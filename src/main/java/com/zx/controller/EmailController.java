@@ -25,6 +25,7 @@ public class EmailController {
     @RequestMapping("/listEmails")
     public ModelAndView listEmails(HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("user");
+        System.out.println(user.getUname());
         ModelAndView mav = new ModelAndView();
         List<Email> emails = iEmailService.findAll(user.getUname());
         for(Email email:emails){
@@ -43,7 +44,7 @@ public class EmailController {
         if(user != null) {
             // 将获取的user 存储到session中
             request.getSession().setAttribute("user", user);
-            return "redirect:/email.jsp";
+            return "redirect:/listEmails";
         }
         else{
             request.setAttribute("msg", "Failed");
