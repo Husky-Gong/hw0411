@@ -15,8 +15,8 @@ public class EmailServiceImpl implements IEmailService {
     EmailMapper emailMapper;
 
     @Override
-    public List<Email> findAll() {
-        return emailMapper.findAll();
+    public List<Email> findAll(String uname) {
+        return emailMapper.findAll(uname);
     }
 
 }

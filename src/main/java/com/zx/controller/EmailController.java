@@ -23,9 +23,10 @@ public class EmailController {
     IUserService iUserService;
 
     @RequestMapping("/listEmails")
-    public ModelAndView listEmails(){
+    public ModelAndView listEmails(HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
         ModelAndView mav = new ModelAndView();
-        List<Email> emails = iEmailService.findAll();
+        List<Email> emails = iEmailService.findAll(user.getUname());
         for(Email email:emails){
             System.out.println(email);
         }
@@ -38,7 +39,12 @@ public class EmailController {
     public String userLogin(String uname, String pwd, HttpServletRequest request){
         System.out.println("username:"+uname+"\t password:"+pwd);
         User user = iUserService.selectOne(uname,pwd);
-        if(user != null) return "redirect:/email.jsp";
+
+        if(user != null) {
+            // 将获取的user 存储到session中
+            request.getSession().setAttribute("user", user);
+            return "redirect:/email.jsp";
+        }
         else{
             request.setAttribute("msg", "Failed");
             return "forward:/login.jsp";
