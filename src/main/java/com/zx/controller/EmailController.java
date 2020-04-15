@@ -19,8 +19,11 @@ public class EmailController {
     @RequestMapping("/listEmails")
     public ModelAndView listEmails(){
         ModelAndView mav = new ModelAndView();
-        List<Email> emals = iEmailService.findAll();
-        mav.addObject("emails",emals);
+        List<Email> emails = iEmailService.findAll();
+        for(Email email:emails){
+            System.out.println(email);
+        }
+        mav.addObject("emails",emails);
         mav.setViewName("email");
         return mav;
     }

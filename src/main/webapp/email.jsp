@@ -5,11 +5,12 @@
   Time: 9:41 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Email list</title>
+    <title>listBooks</title>
 </head>
 <body>
 <form>
@@ -19,14 +20,13 @@
             <th width="140">Time</th>
             <th width="140">Author</th>
         </tr>
-        <c:forEach items="${emails}" var="e">
+        <!-- 返回到前端的emails是一个List<Email> -->
+        <c:forEach items="${emails}" var="b">
             <tr>
-                <td>${e.etitle}</td>
-                <td>${e.edate}</td>
-                <td>${e.sendid}</td>
+                <td>${b.etitle}</td>
+                <td>${b.edate}</td>
+                <td>${b.sendid}</td>
             </tr>
         </c:forEach>
     </table>
 </form>
-</body>
-</html>
